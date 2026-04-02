@@ -2,15 +2,24 @@
 
 ## 1. System Design
 
+### Core user actions (from scenario)
+
+1. **Register pets and care items** — Add one or more pets and attach care tasks (walks, feedings, medications, appointments) with time, frequency, and priority so the system has a single source of truth for what needs doing.
+
+2. **See and adjust today’s plan** — View tasks for a chosen day sorted by time, filter by pet or completion status, and mark tasks done; the app should surface conflicts when two items land at the same time.
+
+3. **Trust recurring and priorities** — Rely on daily/weekly recurrence to roll completed routines forward and use the scheduler to order work sensibly for a busy owner.
+
 **a. Initial design**
 
-- Briefly describe your initial UML design.
-- What classes did you include, and what responsibilities did you assign to each?
+- **Owner** — Holds the owner’s name and a collection of **Pet** instances. Responsible for adding pets and exposing all tasks across pets for the scheduler.
+- **Pet** — Identity (`name`, `species`) and a list of **Task** objects. Responsible for attaching tasks to the right animal and completing tasks (including appending the next occurrence for recurring items).
+- **Task** — One concrete activity: description, clock time (`HH:MM`), calendar date, frequency (`once` / `daily` / `weekly`), completion flag, duration, priority, and optional `pet_name` for filtering/display after assignment.
+- **Scheduler** — Uses an **Owner** to gather tasks, filters by date and optional criteria, sorts by time, and returns lightweight conflict warnings when multiple tasks share the same slot.
 
 **b. Design changes**
 
-- Did your design change during implementation?
-- If yes, describe at least one change and why you made it.
+- *(Updated in later phases if the model diverges from this blueprint.)*
 
 ---
 

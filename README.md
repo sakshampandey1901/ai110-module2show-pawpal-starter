@@ -41,3 +41,46 @@ pip install -r requirements.txt
 5. Add tests to verify key behaviors.
 6. Connect your logic to the Streamlit UI in `app.py`.
 7. Refine UML so it matches what you actually built.
+
+## Architecture (UML — Mermaid)
+
+The diagram below summarizes how the four main types work together. **Owner** aggregates **Pet**; each **Pet** owns many **Task** records; **Scheduler** reads from **Owner** to sort, filter, and check conflicts.
+
+```mermaid
+classDiagram
+    direction TB
+    class Owner {
+        +str name
+        +list pets
+        +add_pet(pet)
+        +get_pet(name)
+        +all_tasks()
+    }
+    class Pet {
+        +str name
+        +str species
+        +list tasks
+        +add_task(task)
+        +complete_task(task)
+    }
+    class Task {
+        +str description
+        +str time
+        +date task_date
+        +str frequency
+        +bool completed
+        +int duration_minutes
+        +str priority
+        +mark_complete()
+    }
+    class Scheduler {
+        +Owner owner
+        +tasks_for_date(date)
+        +sort_by_time(tasks)
+        +filter_tasks(tasks)
+        +detect_conflicts(tasks)
+    }
+    Owner "1" --> "*" Pet : owns
+    Pet "1" --> "*" Task : has
+    Scheduler --> Owner : uses
+```
