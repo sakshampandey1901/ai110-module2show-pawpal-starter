@@ -138,7 +138,11 @@ The tests cover:
 
 ## 📸 Demo
 
-Embed your own Streamlit screenshot for course submission (replace the filename if needed):
+**Today’s schedule** and **Mark complete** in the Streamlit app (dark theme):
+
+![PawPal+ Streamlit UI — schedule filters, task table, and mark-complete section](pawpal_screenshot.png)
+
+If your course host expects a fixed asset URL, you can mirror the same file as `pawpal_screenshot.png`:
 
 <a href="/course_images/ai110/pawpal_screenshot.png" target="_blank"><img src="/course_images/ai110/pawpal_screenshot.png" title="PawPal App" width="" alt="PawPal App" class="center-block" /></a>
 
