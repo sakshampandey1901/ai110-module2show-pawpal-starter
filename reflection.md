@@ -59,13 +59,18 @@
 
 **a. What you tested**
 
-- What behaviors did you test?
-- Why were these tests important?
+- **Completion and addition** — Baseline object behavior (`mark_complete`, `add_task` count).
+- **Sorting** — Chronological order for `HH:MM` strings on a fixed day.
+- **Daily recurrence** — Completing a daily task yields exactly one new instance on the next calendar day.
+- **Conflicts** — Two pets with the same start time on the same day trigger `detect_conflicts`.
+- **Empty schedule** — A pet with no tasks still runs through `sort_by_time` without failure.
+
+These tests guard the behaviors users see in both `main.py` and Streamlit: ordering, recurrence after “done,” and visible warnings.
 
 **b. Confidence**
 
-- How confident are you that your scheduler works correctly?
-- What edge cases would you test next if you had more time?
+- **Rating:** about **4/5** — Happy paths and several edge cases are automated; the design is small enough to reason about by hand.
+- **Next edge cases:** weekly recurrence with month boundaries; tasks at `24:00` or invalid time strings; partial overlaps using duration; multi-day “appointments”; persistence across browser sessions (database or file store).
 
 ---
 

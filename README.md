@@ -116,3 +116,22 @@ python3 main.py
 | Filters | By pet and/or hide completed items (Streamlit + `filter_tasks`). |
 | Recurrence | Completing daily/weekly tasks schedules the next occurrence automatically. |
 | Conflict hints | Same date + same start time → warning strings for the UI or terminal. |
+
+## Testing PawPal+
+
+Run the full suite from the project root:
+
+```bash
+python3 -m pytest
+```
+
+The tests cover:
+
+- **Task completion** — `mark_complete()` flips the completed flag.
+- **Task addition** — Adding tasks through `Pet.add_task()` increases that pet’s task count.
+- **Sorting** — Tasks for a day are returned in chronological order by `HH:MM`.
+- **Daily recurrence** — Completing a daily task creates a new open task for the following day.
+- **Conflict detection** — Two tasks at the same date and time produce a scheduler warning.
+- **Empty pet** — Sorting/filtering with no tasks does not error.
+
+**Confidence level:** ★★★★☆ (4/5) — Core paths and the listed edge cases are covered; production use would add property-based tests, timezone-aware times, and duration overlap checks.
