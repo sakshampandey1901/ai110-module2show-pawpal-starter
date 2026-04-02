@@ -19,7 +19,9 @@
 
 **b. Design changes**
 
-- *(Updated in later phases if the model diverges from this blueprint.)*
+- **`pet_name` on `Task`** — Tasks are owned by a `Pet`, but the scheduler works with flat lists. Setting `pet_name` inside `Pet.add_task()` makes filtering and conflict messages readable without passing pet objects everywhere.
+- **`Pet.complete_task()`** — Centralizes “mark done + append next recurrence” so the UI and tests do not duplicate recurrence rules.
+- **Conflict detection on `Scheduler`** — Kept separate from `Owner` so the domain model stays about entities, while cross-pet checks stay lightweight utilities.
 
 ---
 
@@ -27,13 +29,15 @@
 
 **a. Constraints and priorities**
 
-- What constraints does your scheduler consider (for example: time, priority, preferences)?
-- How did you decide which constraints mattered most?
+- **Calendar date** — Only tasks whose `task_date` matches the viewed day appear in the daily schedule (`tasks_for_date`).
+- **Clock time** — Primary ordering uses start time (`HH:MM`); priority is visible in the table but does not reorder tasks automatically (a deliberate simplification so behavior stays predictable).
+- **Completion** — Optional filter hides finished work; recurring tasks spawn the next dated instance when completed.
+- **Why time first** — For a household routine, “when is something due?” is the main coordination question; priority can be layered later (e.g., tie-break or optimization pass).
 
 **b. Tradeoffs**
 
-- Describe one tradeoff your scheduler makes.
-- Why is that tradeoff reasonable for this scenario?
+- **Exact-time conflicts only** — `detect_conflicts` treats a clash as the same **date and start time string** only. It ignores overlapping **durations** (e.g., a 60-minute walk starting at 09:00 vs. a 30-minute slot at 09:30).
+- **Why that’s reasonable** — No duration-aware calendar engine is required for the module scope; owners still get a clear signal for double-booked start times. A future version could convert intervals to minutes and detect overlaps.
 
 ---
 

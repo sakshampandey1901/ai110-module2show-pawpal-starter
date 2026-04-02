@@ -84,3 +84,35 @@ classDiagram
     Pet "1" --> "*" Task : has
     Scheduler --> Owner : uses
 ```
+
+## Smarter scheduling
+
+The logic layer (`pawpal_system.py`) includes:
+
+- **Chronological sorting** — `Scheduler.sort_by_time()` orders tasks by clock time (`HH:MM`), using a small parser so strings sort as real times, not lexicographic accidents.
+- **Filtering** — `filter_tasks()` can narrow by completion status and/or pet name for focused views in the CLI or Streamlit UI.
+- **Recurring tasks** — When a **daily** or **weekly** task is completed via `Pet.complete_task()`, `Task.mark_complete()` appends the next dated instance to the same pet.
+- **Conflict warnings** — `detect_conflicts()` flags when two or more tasks share the **exact same calendar date and start time** (any pet). The app shows these as warnings instead of blocking saves.
+
+### Run the app
+
+```bash
+streamlit run app.py
+```
+
+### CLI demo
+
+```bash
+python3 main.py
+```
+
+## Features
+
+| Feature | Description |
+|--------|-------------|
+| Multi-pet owner | One `Owner`, many `Pet` records; all tasks roll up for scheduling. |
+| Task metadata | Time, date, duration, priority, frequency (`once` / `daily` / `weekly`). |
+| Sorted daily view | See the day’s tasks in time order. |
+| Filters | By pet and/or hide completed items (Streamlit + `filter_tasks`). |
+| Recurrence | Completing daily/weekly tasks schedules the next occurrence automatically. |
+| Conflict hints | Same date + same start time → warning strings for the UI or terminal. |
