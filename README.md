@@ -135,3 +135,11 @@ The tests cover:
 - **Empty pet** — Sorting/filtering with no tasks does not error.
 
 **Confidence level:** ★★★★☆ (4/5) — Core paths and the listed edge cases are covered; production use would add property-based tests, timezone-aware times, and duration overlap checks.
+
+## 📸 Demo
+
+Embed your own Streamlit screenshot for course submission (replace the filename if needed):
+
+<a href="/course_images/ai110/pawpal_screenshot.png" target="_blank"><img src="/course_images/ai110/pawpal_screenshot.png" title="PawPal App" width="" alt="PawPal App" class="center-block" /></a>
+
+**Final UML (image):** see `uml_final.png` in this repo for a visual class overview aligned with `pawpal_system.py`.

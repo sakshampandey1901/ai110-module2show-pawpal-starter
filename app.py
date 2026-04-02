@@ -113,6 +113,8 @@ conflicts = sched.detect_conflicts(sched.tasks_for_date(view_date))
 if conflicts:
     for line in conflicts:
         st.warning(line)
+elif sched.tasks_for_date(view_date):
+    st.caption("No start-time conflicts for this day.")
 
 if ordered:
     rows = []

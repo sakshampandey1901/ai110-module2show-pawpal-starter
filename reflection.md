@@ -45,13 +45,14 @@
 
 **a. How you used AI**
 
-- How did you use AI tools during this project (for example: design brainstorming, debugging, refactoring)?
-- What kinds of prompts or questions were most helpful?
+- **Brainstorming & structure** — AI helped turn the written scenario into concrete classes, a Mermaid sketch, and a sensible split between domain objects (`Owner`, `Pet`, `Task`) and the `Scheduler` service.
+- **Implementation speed** — Generating stubs, edge-case ideas (empty pet list, duplicate times), and pytest outlines reduced boilerplate so effort could go into behavior and tests.
+- **Helpful prompts** — “What should happen when a daily task is marked complete?” and “What edge cases matter for a pet scheduler?” produced checklists that shaped `main.py` and `tests/test_pawpal.py`.
 
 **b. Judgment and verification**
 
-- Describe one moment where you did not accept an AI suggestion as-is.
-- How did you evaluate or verify what the AI suggested?
+- **Rejected / adapted:** A fuller “AI optimizer” that **re-sorted by priority** was set aside to keep ordering **time-primary** and predictable for a classroom demo; priority remains visible data for a future iteration.
+- **Verification** — Every behavioral change ran through `python3 main.py` and `python3 -m pytest`; failing tests were treated as ground truth for fixing logic before adjusting the Streamlit layer.
 
 ---
 
@@ -78,12 +79,21 @@ These tests guard the behaviors users see in both `main.py` and Streamlit: order
 
 **a. What went well**
 
-- What part of this project are you most satisfied with?
+- **CLI-first workflow** — Proving scheduling, recurrence, and conflicts in `main.py` before Streamlit avoided UI-only bugs and made pytest cases easy to justify.
+- **Small, composable classes** — Dataclasses with a thin `Scheduler` kept responsibilities clear and the test surface area understandable.
 
 **b. What you would improve**
 
-- If you had another iteration, what would you improve or redesign?
+- **Priority-aware scheduling** — Use priority as a tie-breaker or optimization layer once duration-overlap detection exists.
+- **Persistence** — `st.session_state` is enough for a demo; a file or database would separate “demo app” from “personal tracker.”
 
 **c. Key takeaway**
 
-- What is one important thing you learned about designing systems or working with AI on this project?
+- **Lead architect with AI:** The model accelerates draft code and test ideas, but humans still own invariants (what “conflict” means, how recurrence advances) and must verify with runnable checks—separate chat topics for “design” vs “testing” vs “algorithms” reduce confusion and tangled prompts.
+
+### VS Code Copilot (module prompt alignment)
+
+- **Effective features:** Chat/codebase questions for wiring `Scheduler` to `Owner`, inline refactors for readable terminal output, and test generation scaffolds.
+- **Example rejection:** Skipping automatic **priority re-ordering** to preserve a clear **time-ordered** mental model for owners (see 3b).
+- **Separate sessions:** Treating design, algorithms, and testing as distinct conversations mirrors how a team works in tickets—fewer contradictory suggestions and easier commits per concern.
+- **Role of the human:** Decide boundaries (exact-time conflicts only), acceptable tradeoffs, and what “done” means; use AI to draft, not to override product judgment.
